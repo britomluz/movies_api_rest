@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/styles.css">
+    <title>MoviApp</title>
+</head>
+<body>
+    <nav class="nav">
+        <div>
+            <a href="index.html" class="logosite fontTitle">MoviApp</a>
+        </div>
+        <div>
+            <ul>
+                <li><a href="index.html" >Inicio</a></li>
+                <li><a href="#" class="active">Películas</a></li>
+                <li><a href="actors.html">Actores</a></li>
+                <li><a href="directors.html">Directores</a></li>
+                <li><a href="gender.html">Géneros</a></li>
+            </ul>
+        </div>        
+    </nav>
+    <main class="d-flex flex-column align-items-center">
+        <h1 class="text-center">Películas</h1>
+        <div class="col-11 col-lg-8">
+            <div >
+                <h3>Listado de películas</h3>
+                <p>El listado muestra:</p>
+                <ul>
+                    <li class="colorSec"><span>ID</span></li>                
+                    <li class="colorSec"><span>Image</span></li>
+                    <li class="colorSec"><span>Title</span></li>
+                </ul>
+                <p>El endpoint es</p>
+                <ul>
+                    <li class="colorSec"><b>GET</b><span> /movies</span></li>                                 
+                </ul>
+            </div>
+            <div>
+                <h3>Detalles de película</h3>
+                <p>En el detalle se muestran todos los atributos de las peliculas como asi tambien su director, genero y actores relacionados.</p>
+                <ul>
+                    <li class="colorSec"><span>ID</span></li>                
+                    <li class="colorSec"><span>Image</span></li>
+                    <li class="colorSec"><span>Title</span></li>
+                    <li class="colorSec"><span>Duration</span></li>                
+                    <li class="colorSec"><span>Gender</span></li>
+                    <li class="colorSec"><span>Director</span></li>
+                    <li class="colorSec"><span>Year</span></li>
+                    <li class="colorSec"><span>Rating</span></li>
+                    <li class="colorSec"><span>Overview</span></li>
+                    <li class="colorSec"><span>Actors</span></li>
+                    
+                </ul>
+                <p>Para especificar la pelicula que se desea obtener se debe pasar el id como parametro:</p>
+                <ul>
+                    <li class="colorSec"><b>GET</b><span> /movies/{id}</span></li>                                
+                </ul>
+            </div>
+            <div>
+                <h3>Búsqueda de películas</h3>
+                <p>Se puede buscar peliculas por título, año y género.</p>
+                <p>Para especificar el termino de búsqueda se deberán enviar como parámetros de query.</p>
+                <ul>
+                    <li class="colorSec"><b>GET</b> <span>/movies?name=nombre</span></li>                
+                    <li class="colorSec"><b>GET</b> <span>/movies?year=año</span></li>                
+                    <li class="colorSec"><b>GET</b> <span>/movies?gender=genero</span></li>                                                
+                </ul>
+                <p>Igualmente se puede unificar la búsqueda con todos los parametros</p>
+                <ul>
+                    <li class="colorSec"><b>GET</b> <span>/movies?name=nombre&premiereDate=fecha&gender=genero</span></li>                 
+                </ul>
+                <p class="colorSec"><b>Ejemplo de querys:</b></p>
+                <ul>
+                    <li class="colorSec"><b>GET</b> <span>/movies?name=avengers</span></li>                
+                    <li class="colorSec"><b>GET</b> <span>/movies?year=2021</span></li>                
+                    <li class="colorSec"><b>GET</b> <span>/movies?gender=ficcion</span></li> 
+                    <li class="colorSec"><b>GET</b> <span>/movies?name=avengers&year=fecha&gender=genero</span></li>                 
+                </ul>
+            </div>
+            <div class="mb-5">
+                <h2>Creación, edición y eliminación de películas</h2>
+                <p>Para las siguientes solicitudes es necesario estar autenticado y enviar el token de acceso en el header de la solicitud.</p>
+                <p>Debe enviarse con la key <b>Authorization</b> y la palabra <b>"Bearer "</b> + espacio, seguido del token de acceso, de la siguiente manera </p>
+                <p>Authorization: "Bearer token_access"</p>
+                <p><b>Ejemplo:</b></p>
+                <p class="text-break">Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJicml0b21sdXpAZ21haWwuY29tIiwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NDUwNzUwMDR9.PGP9TyyKGAuP0bRQrYJLEoxx_HS_VyGxuiAp0_OD2WI"</p>
+                <div>
+                    <h3>Creación de película</h3>
+                    <p>Para crear una película es necesario enviar un objeto JSON con los atributos de la película</p>
+                     
+                    <p>El endpoint es:</p>
+                    <ul>
+                        <li class="colorSec"><b>POST</b><span> /movies</span></li>                                    
+                    </ul>
+                    <pre>
+                        {                          
+                            "image": "string",
+                            "title": "string",
+                            "duration": "string",
+                            "gender": "string",
+                            "director": "string"                                
+                            "year": "string"    
+                            "rating": "string"    
+                            "overview": "string"    
+                            }
+                    </pre>
+                    <p class="colorSec"><b>Ejemplo de solicitud:</b></p>
+                    <ul>
+                        <li class="colorSec"><b>POST</b><span> /movies</span></li>
+                    </ul>
+                    <p class="colorSec"><b>Ejemplo de JSON a enviar:</b></p>
+                    <pre>
+                        {
+                            "image": "string",
+                            "title": "string",
+                            "duration": "string",
+                            "gender": "string",
+                            "director": "string"                                
+                            "year": "string"    
+                            "rating": "string"    
+                            "overview": "string"    
+                            }
+                    </pre>
+                </div>
+                <div>
+                    <h3>Edición de película</h3>
+                    <p>Para editar una película es necesario especificar el ID de la película en el path y se debe enviar un objeto JSON con los atributos de la película</p>
+                    
+                    <p>El endpoint es:</p>
+                    <ul>
+                        <li class="colorSec"><b>PUT</b><span> /movies/{id}</span></li>
+                    </ul>
+                    <pre>
+                        {                         
+                            "image": "string",
+                            "title": "string",
+                            "duration": "string",
+                            "gender": "string",
+                            "director": "string"                                
+                            "year": "string"    
+                            "rating": "string"    
+                            "overview": "string"    
+                            }
+                    </pre> 
+                    <p class="colorSec"><b>Ejemplo de solicitud:</b></p>
+                    <ul>
+                        <li class="colorSec"><b>PUT</b><span> /movies/8</span></li> 
+                    </ul>
+                    <p class="colorSec"><b>Ejemplo de JSON a enviar:</b></p>
+                    <pre>
+                        {                        
+                            "image": "string",
+                            "title": "string",
+                            "duration": "string",
+                            "gender": "string",
+                            "director": "string"                                
+                            "year": "string"    
+                            "rating": "string"    
+                            "overview": "string"    
+                            }
+                    </pre>
+                </div>
+                <div>
+                    <h3>Eliminación de película</h3>
+                    <p>Para especificar la película que será eliminada es necesario enviar el ID de la película en el path</p>
+                                    
+                    <p>El endpoint es:</p>
+                    <ul>
+                        <li class="colorSec"><b>DELETE</b><span> /movies/{id}</span></li>                                
+                    </ul>
+        
+                    <p class="colorSec"><b>Ejemplo de solicitud:</b></p>
+                    <ul>
+                        <li class="colorSec"><b>DELETE</b><span> /movies/3</span></li>                               
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+        
+    </main>
+    <footer class="">
+        <div class="pt-3 pb-2">
+            <p class="text-light text-center">Powered by <b>Luz Brito</b></p>
+        </div>        
+    </footer>
+    
+</body>
+</html>
