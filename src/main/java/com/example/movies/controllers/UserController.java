@@ -1,7 +1,6 @@
 package com.example.movies.controllers;
 import com.example.movies.models.Role;
 import com.example.movies.models.User;
-import com.example.movies.services.EmailService;
 import com.example.movies.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,14 +21,10 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @Autowired
-    EmailService emailService;
-
 
     @GetMapping("/users")
     public ResponseEntity<Object> getUsers(){
 
-        //userService.getAll().stream().map(UserDTO::new).collect(Collectors.toList())
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
@@ -50,8 +45,6 @@ public class UserController {
         userService.saveUser(user);
         userService.addRoleToUser(user.getUsername(), "ROLE_USER");
 
-        sendEmail(user.getUsername());
-
         return new ResponseEntity<>("User created",HttpStatus.CREATED);
     }
 
@@ -62,14 +55,6 @@ public class UserController {
 
         return ResponseEntity.created(uri).body(userService.saveRole(role));
     }
-
-    @GetMapping("/sendMail/{email}")
-    public String sendEmail(@PathVariable(value="email", required=true) String email){
-
-        return emailService.sendEmail(email);
-    }
-
-
 
 
 }
