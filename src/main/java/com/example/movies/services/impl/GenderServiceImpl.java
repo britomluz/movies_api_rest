@@ -1,8 +1,8 @@
 package com.example.movies.services.impl;
 
 import com.example.movies.models.Gender;
-import com.example.movies.repositories.GenreRepository;
-import com.example.movies.services.GenreService;
+import com.example.movies.repositories.GenderRepository;
+import com.example.movies.services.GenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,34 +12,34 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class GenreServiceImpl implements GenreService {
+public class GenderServiceImpl implements GenderService {
 
     @Autowired
-    private GenreRepository genreRepository;
+    private GenderRepository genderRepository;
 
     @Override
     public Gender saveGenre(Gender gender) {
-        return genreRepository.save(gender);
+        return genderRepository.save(gender);
     }
 
     @Override
     public void deleteGenre(Gender gender) {
-        genreRepository.delete(gender);
+        genderRepository.delete(gender);
     }
 
     @Override
     public List<Gender> getAllGenres() {
-        return genreRepository.findAll();
+        return genderRepository.findAll();
     }
 
     @Override
     public Gender getGenreByName(String name) {
-        return genreRepository.findByName(name);
+        return genderRepository.findByName(name);
     }
 
     @Override
     public Optional<Gender> getGenreById(Long id) {
-        return genreRepository.findById(id);
+        return genderRepository.findById(id);
     }
 
 

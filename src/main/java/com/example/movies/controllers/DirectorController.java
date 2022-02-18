@@ -1,5 +1,6 @@
 package com.example.movies.controllers;
 
+import com.example.movies.dtos.DirectorDTO;
 import com.example.movies.dtos.DirectorDetailsDTO;
 import com.example.movies.dtos.MovieDTO;
 import com.example.movies.models.Director;
@@ -46,7 +47,7 @@ public class DirectorController {
         DirectorDetailsDTO directorDTO = DirectorDetailsDTO.builder()
                 .id(director.getId())
                 .name(director.getName())
-                .movies(director.getMovies().stream().map(movie -> MovieDTO.builder().id(movie.getId()).image(movie.getImage().toString()).title(movie.getTitle()).year(movie.getYear().toString()).gender(movie.getGender().getName()).build()).collect(Collectors.toList()))
+                .movies(director.getMovies().stream().map(movie -> MovieDTO.builder().id(movie.getId()).image(movie.getImage().toString()).title(movie.getTitle()).year(movie.getYear().toString()).gender(movie.getGender().getName()).build()).collect(Collectors.toSet()))
                 .build();
 
         return ResponseEntity.ok().body(directorDTO);

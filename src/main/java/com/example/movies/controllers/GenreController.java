@@ -6,7 +6,7 @@ import com.example.movies.dtos.MovieDTO;
 import com.example.movies.models.Gender;
 import com.example.movies.models.Role;
 import com.example.movies.models.User;
-import com.example.movies.services.GenreService;
+import com.example.movies.services.GenderService;
 import com.example.movies.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class GenreController {
 
     @Autowired
-    GenreService genreService;
+    GenderService genderService;
 
     @Autowired
     UserService userService;
@@ -31,7 +31,7 @@ public class GenreController {
     @GetMapping("/genders")
     public ResponseEntity<Object> getGenres(){
 
-        return ResponseEntity.ok().body(genreService.getAllGenres().stream().map(genre ->
+        return ResponseEntity.ok().body(genderService.getAllGenres().stream().map(genre ->
                 GenreDTO.builder()
                         .id(genre.getId())
                         .name(genre.getName())
@@ -43,7 +43,7 @@ public class GenreController {
     @GetMapping("/genders/{id}")
     public ResponseEntity<Object> getGenre(@PathVariable Long id){
 
-        Gender gender = genreService.getGenreById(id).orElse(null);
+        Gender gender = genderService.getGenreById(id).orElse(null);
 
         if (gender == null){
             return new ResponseEntity<>("Gender doesn't exists",HttpStatus.NOT_FOUND);
@@ -52,7 +52,7 @@ public class GenreController {
         GenreDetailsDTO genreDTO = GenreDetailsDTO.builder()
                 .id(gender.getId())
                 .name(gender.getName())
-                .movies(gender.getMovies().stream().map(movie -> MovieDTO.builder().id(movie.getId()).image(movie.getImage().toString()).title(movie.getTitle()).year(movie.getYear().toString()).build()).collect(Collectors.toList()))
+                .movies(gender.getMovies().stream().map(movie -> MovieDTO.builder().id(movie.getId()).image(movie.getImage().toString()).title(movie.getTitle()).year(movie.getYear().toString()).gender(movie.getGender().getName()).build()).collect(Collectors.toList()))
                 .build();
 
         return ResponseEntity.ok().body(genreDTO);
@@ -71,7 +71,7 @@ public class GenreController {
             return new ResponseEntity<>("Empty fields",HttpStatus.BAD_REQUEST);
         }
 
-        Gender genderByName = genreService.getGenreByName(gender.getName());
+        Gender genderByName = genderService.getGenreByName(gender.getName());
 
         if (genderByName != null){
             return new ResponseEntity<>("Gender already exists",HttpStatus.CONFLICT);
@@ -79,7 +79,7 @@ public class GenreController {
 
         Gender newGender = new Gender(null, gender.getName().toUpperCase(), new ArrayList<>());
 
-        genreService.saveGenre(newGender);
+        genderService.saveGenre(newGender);
 
         return new ResponseEntity<>("Gender created",HttpStatus.CREATED);
     }

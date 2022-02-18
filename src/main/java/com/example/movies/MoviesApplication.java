@@ -28,7 +28,7 @@ public class MoviesApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(UserService userService, ActorService actorService, MovieService movieService, GenreService genreService, DirectorService directorService){
+	public CommandLineRunner initData(UserService userService, ActorService actorService, MovieService movieService, GenderService genderService, DirectorService directorService){
 		return (args) -> {
 			//roles
 			userService.saveRole(new Role(null, "ROLE_USER"));
@@ -117,9 +117,12 @@ public class MoviesApplication {
 			userService.saveRole(manager);
 			userService.saveUser(melba);
 
-			genreService.saveGenre(ficcion);genreService.saveGenre(infantil);
-			genreService.saveGenre(romantica);genreService.saveGenre(comedia);
-			genreService.saveGenre(fantasia);genreService.saveGenre(terror);
+			genderService.saveGenre(ficcion);
+            genderService.saveGenre(infantil);
+			genderService.saveGenre(romantica);
+            genderService.saveGenre(comedia);
+			genderService.saveGenre(fantasia);
+            genderService.saveGenre(terror);
 
 			actorService.saveActor(actor1);actorService.saveActor(actor2);
 			actorService.saveActor(actor3);actorService.saveActor(actor4);

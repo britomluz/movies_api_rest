@@ -39,7 +39,7 @@
                 <p>El endpoint es</p>
                 <ul>
                     <li class="colorSec"><b>GET</b><span> /genders</span></li>                                 
-                </ul>
+                </ul>                
             </div>
             <div>
                 <h3>Detalles de género</h3>
@@ -49,9 +49,13 @@
                     <li class="colorSec"><span>Name</span></li>                    
                     <li class="colorSec"><span>Movies</span></li>                                        
                 </ul>
-                <p>Para especificar el género que se desea obtener se debe pasar el id como parametro:</p>
+                <p>Para especificar el género que se desea obtener se debe pasar el id en el path:</p>
                 <ul>
                     <li class="colorSec"><b>GET</b><span> /genders/{id}</span></li>                                
+                </ul>
+                <p class="colorSec"><b>Ejemplo de solicitud:</b></p>
+                <ul>
+                    <li class="colorSec"><b>GET</b><span> /directors/3</span></li>                                 
                 </ul>
             </div>            
             <div class="mb-5">
@@ -63,7 +67,7 @@
                 <p class="text-break">Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJicml0b21sdXpAZ21haWwuY29tIiwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NDUwNzUwMDR9.PGP9TyyKGAuP0bRQrYJLEoxx_HS_VyGxuiAp0_OD2WI"</p>
                 <div>
                     <h3>Creación de género </h3>
-                    <p>Para crear un género es necesario enviar un objeto JSON con los atributos del mismo</p>
+                    <p>Para crear un género es necesario enviar un objeto JSON con el atributo "name" del mismo</p>
                      
                     <p>El endpoint es:</p>
                     <ul>

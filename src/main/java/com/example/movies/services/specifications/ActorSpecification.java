@@ -1,5 +1,6 @@
 package com.example.movies.services.specifications;
 
+import com.example.movies.dtos.ActorDTO;
 import com.example.movies.dtos.ActorDetailsDTO;
 import com.example.movies.models.Actor;
 import com.example.movies.services.ActorService;
@@ -21,20 +22,20 @@ public class ActorSpecification {
     @Autowired
     ActorService actorService;
 
-    public static Specification<Actor> actorFilter(ActorDetailsDTO filter){
+    public static Specification<Actor> actorFilter(ActorDTO filter){
         return (root, query, criteriaBuilder) -> {
             List<Predicate> criteriaList = new ArrayList<>();
 
             if(StringUtils.hasText(filter.getName())){
                 criteriaList.add(criteriaBuilder.like(criteriaBuilder.upper(root.get("name")), "%"+filter.getName().toUpperCase(Locale.ROOT)+"%"));
             }
-            if(filter.getGenderType() != null){
-               criteriaList.add(criteriaBuilder.equal(root.get("gender"), filter.getGenderType()));
+            if(StringUtils.hasText(filter.getGender())){
+                criteriaList.add(criteriaBuilder.like(root.get("gender").get("name").as(String.class), "%"+filter.getGender()+"%"));
             }
-
-            if(filter.getAge() != null){
-                criteriaList.add(criteriaBuilder.lessThanOrEqualTo(root.get("age"), filter.getAge()));
-            }
+            /*
+            if(StringUtils.hasText(filter.getAge())){
+                criteriaList.add(criteriaBuilder.like(root.get("age").as(String.class), "%"+filter.getAge()+"%"));
+            }*/
 
             return criteriaBuilder.and(criteriaList.toArray(new Predicate[criteriaList.size()]));
         };

@@ -30,7 +30,7 @@ public class Movie {
     private String overview;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "genre_id")
+    @JoinColumn(name = "genderId")
     private Gender gender;
 
     @ManyToOne(fetch = FetchType.EAGER)

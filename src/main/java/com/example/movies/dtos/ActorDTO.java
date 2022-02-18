@@ -14,7 +14,8 @@ import java.net.URL;
 public class ActorDTO {
 
     private Long id;
-    private URL image;
+    private String image;
     private String name;
+    private String gender;
 
 }

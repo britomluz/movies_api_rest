@@ -2,6 +2,7 @@ package com.example.movies.services;
 
 
 
+import com.example.movies.dtos.ActorDTO;
 import com.example.movies.dtos.ActorDetailsDTO;
 import com.example.movies.models.Actor;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,6 @@ public interface ActorService {
     public Optional<Actor> getActorById(Long id);
     public void deleteActor(Actor actor);
     public List<Actor> getAllActors();
-    public Page<Actor> getActorByFilter(ActorDetailsDTO filter, Pageable pageable);
+    public Page<Actor> getActorByFilter(ActorDTO filter, Pageable pageable);
 
 }

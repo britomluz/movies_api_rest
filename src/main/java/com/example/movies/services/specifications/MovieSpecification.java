@@ -29,15 +29,12 @@ public class MovieSpecification {
             }
 
             if(StringUtils.hasText(filter.getYear())){
-                criteriaList.add(criteriaBuilder.like(root.get("premiere").as(String.class), "%"+filter.getYear()+"%"));
+                criteriaList.add(criteriaBuilder.like(root.get("year").as(String.class), "%"+filter.getYear()+"%"));
             }
-
-             //   criteriaList.add(criteriaBuilder.equal(root.get("gender").get("name"), filter.getGender().getName()));
 
             if(StringUtils.hasText(filter.getGender())){
-                criteriaList.add(criteriaBuilder.like(criteriaBuilder.upper(root.get("gender")), "%"+filter.getGender().toUpperCase(Locale.ROOT)+"%"));
+                criteriaList.add(criteriaBuilder.like(root.get("gender").as(String.class), filter.getGender()));
             }
-
             return criteriaBuilder.and(criteriaList.toArray(new Predicate[criteriaList.size()]));
         };
     }

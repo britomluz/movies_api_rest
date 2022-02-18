@@ -30,13 +30,12 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers(  "/sendMail/**", "/actors/**", "/users/**","/genres/**","/movies/**", "/directors/**", "rest/**").permitAll()
-                /*.antMatchers(HttpMethod.POST, "/users/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/actors/**", "/users/**","/genres/**","/movies/**", "/directors/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/actors/**", "/users/**","/genres/**","/movies/**", "/directors/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers(HttpMethod.PUT, "/movies/**","/actors/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/actors/**", "/users/**","/genres/**","/movies/**", "/directors/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers("/rest/**").hasAuthority("ROLE_ADMIN")*/
-                .antMatchers(HttpMethod.DELETE, "/actors/**", "/users/**","/genres/**","/movies/**", "/directors/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/actors/**", "/genres/**","/movies/**", "/directors/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                .antMatchers(HttpMethod.PUT, "/actors/**", "/users/**","/genres/**","/movies/**", "/directors/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                .antMatchers(HttpMethod.DELETE, "/actors/**", "/users/**","/genres/**","/movies/**", "/directors/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                .antMatchers("/rest/**").hasAuthority("ROLE_ADMIN")
                 .and()
                 .formLogin()
                 .usernameParameter("email")

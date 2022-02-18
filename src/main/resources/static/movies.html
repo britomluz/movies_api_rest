@@ -35,11 +35,25 @@
                 <ul>
                     <li class="colorSec"><span>ID</span></li>                
                     <li class="colorSec"><span>Image</span></li>
+                    <li class="colorSec"><span>Year</span></li>
                     <li class="colorSec"><span>Title</span></li>
                 </ul>
                 <p>El endpoint es</p>
                 <ul>
                     <li class="colorSec"><b>GET</b><span> /movies</span></li>                                 
+                </ul>
+
+                <p>El número de página debe especificarse por parámetro:</p>
+                <ul>
+                    <li class="colorSec"><b>GET</b><span> /movies?page=numPage</span></li>                                 
+                </ul>
+                <p>El orden debe especificarse por parámetro:</p>
+                <ul>
+                    <li class="colorSec"><b>GET</b><span> /movies?sort=atributo,asc|desc</span></li>                                 
+                </ul>
+                <p class="colorSec"><b>Ejemplo de solicitud:</b></p>
+                <ul>
+                    <li class="colorSec"><b>GET</b><span> /movies?page=0&sort=titulo,desc</span></li>                                 
                 </ul>
             </div>
             <div>
@@ -58,30 +72,32 @@
                     <li class="colorSec"><span>Actors</span></li>
                     
                 </ul>
-                <p>Para especificar la pelicula que se desea obtener se debe pasar el id como parametro:</p>
+                <p>Para especificar la pelicula que se desea obtener se debe pasar el id en el path:</p>
                 <ul>
                     <li class="colorSec"><b>GET</b><span> /movies/{id}</span></li>                                
+                </ul>
+                <p class="colorSec"><b>Ejemplo de solicitud:</b></p>
+                <ul>
+                    <li class="colorSec"><b>GET</b><span> /movies/6</span></li>                                 
                 </ul>
             </div>
             <div>
                 <h3>Búsqueda de películas</h3>
-                <p>Se puede buscar peliculas por título, año y género.</p>
+                <p>Se puede buscar peliculas por título y/o año.</p>
                 <p>Para especificar el termino de búsqueda se deberán enviar como parámetros de query.</p>
                 <ul>
-                    <li class="colorSec"><b>GET</b> <span>/movies?name=nombre</span></li>                
-                    <li class="colorSec"><b>GET</b> <span>/movies?year=año</span></li>                
-                    <li class="colorSec"><b>GET</b> <span>/movies?gender=genero</span></li>                                                
+                    <li class="colorSec"><b>GET</b> <span>/movies?title=titulo</span></li>                
+                    <li class="colorSec"><b>GET</b> <span>/movies?year=año</span></li>                                                     
                 </ul>
-                <p>Igualmente se puede unificar la búsqueda con todos los parametros</p>
+                <p>Igualmente se puede unificar la búsqueda con todos los parámetros</p>
                 <ul>
-                    <li class="colorSec"><b>GET</b> <span>/movies?name=nombre&premiereDate=fecha&gender=genero</span></li>                 
+                    <li class="colorSec"><b>GET</b> <span>/movies?title=titulo&year=año</span></li>                 
                 </ul>
                 <p class="colorSec"><b>Ejemplo de querys:</b></p>
                 <ul>
-                    <li class="colorSec"><b>GET</b> <span>/movies?name=avengers</span></li>                
-                    <li class="colorSec"><b>GET</b> <span>/movies?year=2021</span></li>                
-                    <li class="colorSec"><b>GET</b> <span>/movies?gender=ficcion</span></li> 
-                    <li class="colorSec"><b>GET</b> <span>/movies?name=avengers&year=fecha&gender=genero</span></li>                 
+                    <li class="colorSec"><b>GET</b> <span>/movies?title=twilight</span></li>                
+                    <li class="colorSec"><b>GET</b> <span>/movies?year=2021</span></li> 
+                    <li class="colorSec"><b>GET</b> <span>/movies?name=twilight&year=2013</span></li>                 
                 </ul>
             </div>
             <div class="mb-5">
@@ -99,34 +115,35 @@
                     <ul>
                         <li class="colorSec"><b>POST</b><span> /movies</span></li>                                    
                     </ul>
+                    <p class="colorSec"><b>El JSON debe tener la siguiente estructura:</b></p>
                     <pre>
-                        {                          
-                            "image": "string",
-                            "title": "string",
-                            "duration": "string",
-                            "gender": "string",
-                            "director": "string"                                
-                            "year": "string"    
-                            "rating": "string"    
-                            "overview": "string"    
-                            }
+                    {                          
+                        "image": "string(url)",
+                        "title": "string",
+                        "duration": "string",
+                        "gender": "string",
+                        "director": "string"                                
+                        "year": "string(yyyy-mm-dd)"    
+                        "rating": "string(del 1 al 5)"    
+                        "overview": "string"    
+                        }
                     </pre>
                     <p class="colorSec"><b>Ejemplo de solicitud:</b></p>
                     <ul>
                         <li class="colorSec"><b>POST</b><span> /movies</span></li>
                     </ul>
-                    <p class="colorSec"><b>Ejemplo de JSON a enviar:</b></p>
+                    
                     <pre>
-                        {
-                            "image": "string",
-                            "title": "string",
-                            "duration": "string",
-                            "gender": "string",
-                            "director": "string"                                
-                            "year": "string"    
-                            "rating": "string"    
-                            "overview": "string"    
-                            }
+                    {
+                        "image": "https://www.themoviedb.org/movie/13995-captain-america#",
+                        "title": "CAPTAIN AMERICA",
+                        "duration": "1h 58m",
+                        "gender": "FICCION",
+                        "director": "STEPHEN TOLKIN"                                
+                        "year": "1990-12-14"    
+                        "rating": "3.8"    
+                        "overview": "During World War II, a brave, patriotic American Soldier undergoes experiments to become a new supersoldier, "Captain America". Racing to Germany to sabotage the rockets of Nazi baddie "Red Skull"."    
+                        }
                     </pre>
                 </div>
                 <div>
@@ -137,34 +154,34 @@
                     <ul>
                         <li class="colorSec"><b>PUT</b><span> /movies/{id}</span></li>
                     </ul>
+                    <p class="colorSec"><b>El JSON debe tener la siguiente estructura:</b></p>
                     <pre>
-                        {                         
-                            "image": "string",
-                            "title": "string",
-                            "duration": "string",
-                            "gender": "string",
-                            "director": "string"                                
-                            "year": "string"    
-                            "rating": "string"    
-                            "overview": "string"    
-                            }
+                    {                         
+                        "image": "string",
+                        "title": "string",
+                        "duration": "string",
+                        "gender": "string",
+                        "director": "string"                                
+                        "year": "string"    
+                        "rating": "string"    
+                        "overview": "string"    
+                        }
                     </pre> 
                     <p class="colorSec"><b>Ejemplo de solicitud:</b></p>
                     <ul>
                         <li class="colorSec"><b>PUT</b><span> /movies/8</span></li> 
-                    </ul>
-                    <p class="colorSec"><b>Ejemplo de JSON a enviar:</b></p>
+                    </ul>                    
                     <pre>
-                        {                        
-                            "image": "string",
-                            "title": "string",
-                            "duration": "string",
-                            "gender": "string",
-                            "director": "string"                                
-                            "year": "string"    
-                            "rating": "string"    
-                            "overview": "string"    
-                            }
+                    {                        
+                        "image": "https://www.themoviedb.org/movie/49018-insidious#",
+                        "title": "INSIDIOUS",
+                        "duration": "1h 30m",
+                        "gender": "TERROR",
+                        "director": "JAMES WAN"                                
+                        "year": "2018-01-25"    
+                        "rating": "4.5"    
+                        "overview": "A family discovers that dark spirits have invaded their home."    
+                        }
                     </pre>
                 </div>
                 <div>

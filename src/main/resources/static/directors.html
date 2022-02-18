@@ -43,28 +43,32 @@
             </div>
             <div>
                 <h3>Detalles de director</h3>
-                <p>En el detalle se muestran todos los atributos de los directores como asi tambien sus películas relacionados.</p>
+                <p>En el detalle se muestran todos los atributos de los directores como asi tambien sus películas relacionadas.</p>
                 <ul>
                     <li class="colorSec"><span>ID</span></li>                                    
                     <li class="colorSec"><span>Name</span></li>                    
                     <li class="colorSec"><span>Movies</span></li>                                        
                 </ul>
-                Para especificar el director que se desea obtener se debe pasar el id como parámetro:
+                Para especificar el director que se desea obtener se debe pasar el id en el path:
                 <ul>
                     <li class="colorSec"><b>GET</b><span> /directors/{id}</span></li>                                
+                </ul>
+                <p class="colorSec"><b>Ejemplo de solicitud:</b></p>
+                <ul>
+                    <li class="colorSec"><b>GET</b><span> /directors/3</span></li>                                 
                 </ul>
             </div>            
             <div class="mb-5">
                 <h2>Creación de directores</h2>
-                <p>Para esta solicitud es necesario estar autenticado y enviar el token de acceso en el header de la solicitud.</p>
-                <p>Debe enviarse con la key <b>Authorization</b> y la palabra <b>"Bearer "</b> + espacio, seguido del token de acceso, de la siguiente manera </p>
-                <p>Authorization: "Bearer token_access"</p>
-                <p><b>Ejemplo:</b></p>
-                <p class="text-break">Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJicml0b21sdXpAZ21haWwuY29tIiwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NDUwNzUwMDR9.PGP9TyyKGAuP0bRQrYJLEoxx_HS_VyGxuiAp0_OD2WI"</p>
+                
                 <div>
-                    <h3>Creación de director</h3>
-                    <p>Para crear un director es necesario enviar un objeto JSON con los atributos del mismo</p>
-                     
+                    <h3>Creación de director</h3>                    
+                    <p>Para esta solicitud es necesario estar autenticado y enviar el token de acceso en el header de la solicitud.</p>
+                    <p>Debe enviarse con la key <b>Authorization</b> y la palabra <b>"Bearer "</b> + espacio, seguido del token de acceso, de la siguiente manera </p>
+                    <p>Authorization: "Bearer token_access"</p>
+                    <p>Para crear un director es necesario enviar un objeto JSON con el atributo "name" del mismo</p>
+                    <p><b>Ejemplo:</b></p>
+                    <p class="text-break">Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJicml0b21sdXpAZ21haWwuY29tIiwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NDUwNzUwMDR9.PGP9TyyKGAuP0bRQrYJLEoxx_HS_VyGxuiAp0_OD2WI"</p>
                     <p>El endpoint es:</p>
                     <ul>
                         <li class="colorSec"><b>POST</b><span> /directors</span></li>                                    
@@ -81,7 +85,7 @@
                     <p class="colorSec"><b>Ejemplo de JSON a enviar:</b></p>
                     <pre>
                         {    
-                            "name": "string"    
+                            "name": "KATE WILSON"    
                             }
                     </pre>
                 </div>

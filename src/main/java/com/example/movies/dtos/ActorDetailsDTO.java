@@ -16,10 +16,10 @@ import java.util.Set;
 public class ActorDetailsDTO {
 
     private Long id;
-    private URL image;
+    private String image;
     private String name;
-    private GenderType genderType;
-    private Integer age;
+    private String gender;
+    private String age;
     private Set<MovieDTO> movies;
 
 }

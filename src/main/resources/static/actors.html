@@ -41,6 +41,18 @@
                 <ul>
                     <li class="colorSec"><b>GET</b><span> /actors</span></li>                                 
                 </ul>
+                <p>El número de página debe especificarse por parámetro:</p>
+                <ul>
+                    <li class="colorSec"><b>GET</b><span> /actors?page=numPage</span></li>                                 
+                </ul>
+                <p>El orden debe especificarse por parámetro:</p>
+                <ul>
+                    <li class="colorSec"><b>GET</b><span> /actors?sort=atributo,asc|desc</span></li>                                 
+                </ul>
+                <p class="colorSec"><b>Ejemplo de solicitud:</b></p>
+                <ul>
+                    <li class="colorSec"><b>GET</b><span> /actors?page=0&sort=edad,desc</span></li>                                 
+                </ul>
             </div>
             <div>
                 <h3>Detalles de actor</h3>
@@ -53,30 +65,28 @@
                     <li class="colorSec"><span>Age</span></li>                    
                     <li class="colorSec"><span>Movies</span></li>                    
                 </ul>
-                <p>Para especificar el actor que se desea obtener se debe pasar el id como parametro:</p>
+                <p>Para especificar el actor que se desea obtener se debe pasar el id en el path:</p>
                 <ul>
                     <li class="colorSec"><b>GET</b><span> /actors/{id}</span></li>                                
+                </ul>
+                <p class="colorSec"><b>Ejemplo de solicitud:</b></p>
+                <ul>
+                    <li class="colorSec"><b>GET</b><span> /actors/12</span></li>                                 
                 </ul>
             </div>
             <div>
                 <h3>Búsqueda de actores</h3>
-                <p>Se puede actores por nombre, edad y género.</p>
+                <p>Se puede actores por nombre, edad y género. Genero debera ser female = 0 o male = 1</p>
                 <p>Para especificar el termino de búsqueda se deberán enviar como parámetros de query.</p>
                 <ul>
-                    <li class="colorSec"><b>GET</b> <span>/actors?name=nombre</span></li>                
-                    <li class="colorSec"><b>GET</b> <span>/actors?age=edad</span></li>                
-                    <li class="colorSec"><b>GET</b> <span>/actors?gender=genero</span></li>                                                
+                    <li class="colorSec"><b>GET</b> <span>/actors?name=nombre</span></li>                                                 
+                    <li class="colorSec"><b>GET</b> <span>/actors?gender=0|1</span></li>                                                
                 </ul>
-                <p>Igualmente se puede unificar la búsqueda con todos los parametros</p>
-                <ul>
-                    <li class="colorSec"><b>GET</b> <span>/actors?name=nombre&premiereDate=fecha&gender=genero</span></li>                 
-                </ul>
+                
                 <p class="colorSec"><b>Ejemplo de querys:</b></p>
                 <ul>
-                    <li class="colorSec"><b>GET</b> <span>/actors?name=avengers</span></li>                
-                    <li class="colorSec"><b>GET</b> <span>/actors?age=40</span></li>                
-                    <li class="colorSec"><b>GET</b> <span>/actors?gender=female/male</span></li> 
-                    <li class="colorSec"><b>GET</b> <span>/actors?name=scarlett&age=&gender=</span></li>                 
+                    <li class="colorSec"><b>GET</b> <span>/actors?name=scarlett</span></li>                                                  
+                    <li class="colorSec"><b>GET</b> <span>/actors?gender=0</span></li>                     
                 </ul>
             </div>
             <div class="mb-5">
@@ -98,22 +108,19 @@
                             "image": "string",
                             "name": "string",                            
                             "gender": "string",
-                            "age": "string",                            
-                            "movies": "string"    
+                            "age": "string"   
                             }
                     </pre>
                     <p class="colorSec"><b>Ejemplo de solicitud:</b></p>
                     <ul>
                         <li class="colorSec"><b>POST</b><span> /actors</span></li> 
-                    </ul>
-                    <p class="colorSec"><b>Ejemplo de JSON a enviar:</b></p>
+                    </ul>                   
                     <pre>
                         {                          
-                            "image": "string",
-                            "name": "string",                            
-                            "gender": "string",
-                            "age": "string",                            
-                            "movies": "string"    
+                            "image": "https://www.themoviedb.org/person/90633-gal-gadot#",
+                            "name": "Gal Gadot",                            
+                            "gender": "FEMALE",
+                            "age": "36"    
                             }
                     </pre>
                 </div>

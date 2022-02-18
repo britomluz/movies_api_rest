@@ -3,6 +3,7 @@ import com.example.movies.dtos.ActorDTO;
 import com.example.movies.dtos.ActorDetailsDTO;
 import com.example.movies.dtos.MovieDTO;
 import com.example.movies.models.Actor;
+import com.example.movies.models.GenderType;
 import com.example.movies.models.Role;
 import com.example.movies.models.User;
 import com.example.movies.services.ActorService;
@@ -20,6 +21,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -42,9 +46,9 @@ public class ActorController {
                                                 @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
         try{
 
-            ActorDetailsDTO filterActor = ActorDetailsDTO.builder()
+            ActorDTO filterActor = ActorDTO.builder()
                     .name(queryMap.getFirst("name"))
-                    .age(queryMap.getFirst("age") != null ? Integer.parseInt(Objects.requireNonNull(queryMap.getFirst("age"))):null)
+                    .gender(queryMap.getFirst("gender"))
                     .build();
 
             Page<Actor> page = actorService.getActorByFilter(filterActor, pageable);
@@ -58,8 +62,9 @@ public class ActorController {
             actors.put("content", page.getContent().stream().map(actor ->
                     ActorDTO.builder()
                             .id(actor.getId())
-                            .image(actor.getImage())
+                            .image(actor.getImage().toString())
                             .name(actor.getName())
+                            .gender(actor.getGender().toString())
                             .build()));
 
             return ResponseEntity.ok(actors);
@@ -79,9 +84,10 @@ public class ActorController {
         }
         ActorDetailsDTO actorDTO = ActorDetailsDTO.builder()
                 .id(actor.getId())
-                .image(actor.getImage())
+                .image(actor.getImage().toString())
                 .name(actor.getName())
-                .age(actor.getAge())
+                .age(actor.getAge().toString())
+                .gender(actor.getGender().toString())
                 .movies(actor.getMovies().stream().map(movie -> MovieDTO.builder().id(movie.getId()).image(movie.getImage().toString()).title(movie.getTitle()).year(movie.getYear().toString()).gender(movie.getGender().getName()).build()).collect(Collectors.toSet()))
                 .build();
         return ResponseEntity.ok().body(actorDTO);
@@ -89,7 +95,7 @@ public class ActorController {
 
     //add and actor
     @PostMapping("/actors")
-    public ResponseEntity<?> createActor(Authentication authentication, @RequestBody Actor actor){
+    public ResponseEntity<?> createActor(Authentication authentication, @RequestBody ActorDetailsDTO actorDetailsDTO) throws MalformedURLException {
         User user = userService.getUser(authentication.getName());
         Role role = userService.getRole("ROLE_ADMIN");
 
@@ -97,22 +103,21 @@ public class ActorController {
             return new ResponseEntity<>("Not allowed", HttpStatus.METHOD_NOT_ALLOWED);
         }
 
-
-        String age = String.valueOf(actor.getAge());
-        String image = String.valueOf(actor.getImage());
-        String gender = String.valueOf(actor.getGender());
-
-        if (actor.getName().isEmpty() || age.isEmpty() || image.isEmpty() || gender.isEmpty()){
+        if (actorDetailsDTO.getName().isEmpty() || actorDetailsDTO.getAge().isEmpty() || actorDetailsDTO.getImage().isEmpty() || actorDetailsDTO.getGender().isEmpty()){
             return new ResponseEntity<>("Empty fields",HttpStatus.BAD_REQUEST);
         }
 
-        Actor actorByName = actorService.getActorByName(actor.getName());
+        Actor actorByName = actorService.getActorByName(actorDetailsDTO.getName().toUpperCase());
 
         if (actorByName != null){
             return new ResponseEntity<>("Actor already exists",HttpStatus.CONFLICT);
         }
 
-        Actor newActor = new Actor(null, actor.getImage(), actor.getName().toUpperCase(), actor.getGender(), actor.getAge(), null);
+        int age = Integer.parseInt(actorDetailsDTO.getAge());
+        URL image = new URL(actorDetailsDTO.getImage());
+        GenderType gender = GenderType.valueOf(actorDetailsDTO.getGender().toUpperCase());
+
+        Actor newActor = new Actor(null, image, actorDetailsDTO.getName().toUpperCase(), gender, age, null);
 
         actorService.saveActor(newActor);
 

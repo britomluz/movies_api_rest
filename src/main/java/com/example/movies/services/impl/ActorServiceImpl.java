@@ -1,5 +1,6 @@
 package com.example.movies.services.impl;
 
+import com.example.movies.dtos.ActorDTO;
 import com.example.movies.dtos.ActorDetailsDTO;
 import com.example.movies.models.Actor;
 import com.example.movies.models.Movie;
@@ -61,7 +62,7 @@ public class ActorServiceImpl implements ActorService {
     }
 
     @Override
-    public Page<Actor> getActorByFilter(ActorDetailsDTO filter, Pageable pageable) {
+    public Page<Actor> getActorByFilter(ActorDTO filter, Pageable pageable) {
 
        return actorRepository.findAll(ActorSpecification.actorFilter(filter), pageable);
     }

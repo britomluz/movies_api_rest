@@ -50,18 +50,82 @@
             <div>
                 <h3 class="colorSec mt-4">Autenticación de usuarios</h3>
                 <p>Para realizar peticiones a los endpoints subsiguientes el usuario deberá contar con un token que
-                    obtendrá al autenticarse. Para ello, deberán desarrollarse los endpoints de registro y login, que
-                    permitan obtener el token.
+                    obtendrá al autenticarse. Para ello, el endpoint de login permite obtener el token.
                 </p>                
                 <p class="pb-1">El endpoint encargado de la autenticación es:</p>
                 <ul>
                     <li class="colorSec"><b>POST</b><span> /login</span></li>                
                 </ul>
                 <p class="text-danger pb-4">Aclaración: todas las solicitudes GET son de acceso público por lo que no se necesita enviar el token de acceso.</p>
+
+                <p>Para loguearse se puede utilizar las siguientes credenciales:</p>
+                <ul>
+                    <li class="colorSec"><b>Email:</b><span> britomluz@gmail.com</span></li>                
+                </ul>
+                <ul>
+                    <li class="colorSec"><b>Password:</b><span> luz123</span></li>                
+                </ul>
+                <h3 class="colorSec mt-4">Registro de usuarios</h3>
+                <p>También se puede registrar un usuario nuevo para posteriormente loguearse y obtener el token de acceso.</p>
+                <p class="pb-1">El endpoint encargado del registro es:</p>
+                <ul>
+                    <li class="colorSec"><b>POST</b><span> /users</span></li>                
+                </ul>
+                <p>Para esta solicitud es necesario enviar un objeto JSON con los atributos del usuario:</p>
+                <p class="colorSec"><b>El JSON debe tener la siguiente estructura:</b></p>
+                    <pre>
+                    {                          
+                        "firstName": "string",
+                        "lastName": "string",
+                        "email": "string",
+                        "password": "string"    
+                        }
+                    </pre>
+                    <p class="colorSec"><b>Ejemplo de solicitud:</b></p>
+                    <ul>
+                        <li class="colorSec"><b>POST</b><span> /users</span></li>
+                    </ul>                    
+                    <pre>
+                    {                          
+                        "firstName": "string",
+                        "lastName": "string",
+                        "email": "string",
+                        "password": "string"    
+                        }
+                    </pre>
+                </div>
+                <div>
+                    <h3 class="colorSec mt-4">REST API</h3>
+                    <p>Para ingresar a la API via rest se debe contar con permisos de administrador, el endpoint es:</p>
+                    <ul>
+                        <li class="colorSec"><span> /rest</span></li>                
+                    </ul>
+                    <p class="colorSec"><b>Ejemplo de solicitud:</b></p>
+                    <ul>
+                        <li class="colorSec"><span> /rest/users</span></li>
+                    </ul> 
+                    <ul>
+                        <li class="colorSec"><span> /rest/movies</span></li>
+                    </ul> 
+                    <ul>
+                        <li class="colorSec"><span> /rest/actors</span></li>
+                    </ul> 
+                    <ul>
+                        <li class="colorSec"><span> /rest/directors</span></li>
+                    </ul> 
+                    <ul>
+                        <li class="colorSec"><span> /rest/genders</span></li>
+                    </ul> 
+                </div>
+                <div class="mb-5">
+                    <h3 class="colorSec mt-4">Swagger</h3>
+                    <p>Para el registro automático de los endpoints se integro swagger</p>
+                    <a href="http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/" target="_blank" rel="noopener noreferrer">Puedes ir haciendo click en este enlace</a>
+                </div>
             </div>
         </div>
     </main>
-    <footer class="">
+    <footer class="mt-5">
         <div class="pt-3 pb-2">
             <p class="text-light text-center">Powered by <b>Luz Brito</b></p>
         </div>        
