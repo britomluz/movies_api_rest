@@ -46,10 +46,10 @@ El JSON debe tener la siguiente estructura:
 Ejemplo de solicitud:
   - POST /users
     {                          
-        "firstName": "string",
-        "lastName": "string",
-        "email": "string",
-        "password": "string"    
+        "firstName": "Jhon",
+        "lastName": "Doe",
+        "email": "jhond@gmail.com",
+        "password": "jhon123"    
         }
                     
 *REST API*
