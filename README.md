@@ -21,21 +21,66 @@ Para realizar solicitudes a los endpoints subsiguientes el usuario deberá conta
 
 El endpoint encargado de la autenticación es:
   - POST /login
+
+Para loguearse se puede utilizar las siguientes credenciales:
+  - Email: britomluz@gmail.com
+  - Password: luz123
   
 ACLARACIÓN: todas las solicitudes GET son de acceso público por lo que no se necesita enviar el token de acceso.
 
+*Registro de usuarios*
+También se puede registrar un usuario nuevo para posteriormente loguearse y obtener el token de acceso.
+
+El endpoint encargado del registro es:
+  - POST /users
+  
+Para esta solicitud es necesario enviar un objeto JSON con los atributos del usuario:
+El JSON debe tener la siguiente estructura:
+    {                          
+        "firstName": "string",
+        "lastName": "string",
+        "email": "string",
+        "password": "string"    
+        }
+                    
+Ejemplo de solicitud:
+  - POST /users
+    {                          
+        "firstName": "Jhon",
+        "lastName": "Doe",
+        "email": "jhond@gmail.com",
+        "password": "jhon123"    
+        }
+                    
+*REST API*
+Para ingresar a la API via rest se debe contar con permisos de administrador, el endpoint es:
+
+  - /rest
+Ejemplo de solicitud:
+  - /rest/users
+  - /rest/movies
+  - /rest/actors
+  - /rest/directors
+  - /rest/genders
+
+*Swagger*
+Para el registro automático de los endpoints se integro swagger
+Puedes ir haciendo click en este enlace: 
+http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
+
 ***** PELICULAS *****
 
-Listado de películas
+*Listado de películas:*
 El listado muestra:
   - ID
   - Image
+  - Year
   - Title
   
 El endpoint es
   -GET /movies
   
-Detalles de película
+*Detalles de película:*
 En el detalle se muestran todos los atributos de las peliculas como asi tambien su director, genero y actores relacionados.
   - ID
   - Image
@@ -51,24 +96,31 @@ En el detalle se muestran todos los atributos de las peliculas como asi tambien 
 Para especificar la pelicula que se desea obtener se debe pasar el id como parametro:
   -GET /movies/{id}
   
-Búsqueda de películas
-Se puede buscar peliculas por título, año y género.
+El número de página debe especificarse por parámetro:
+  - GET /movies?page=numPage
+  - 
+El orden debe especificarse por parámetro:
+  - GET /movies?sort=atributo,asc|desc
+  - 
+Ejemplo de solicitud:
+  - GET /movies?page=0&sort=titulo,desc
+  
+*Búsqueda de películas:*
+Se puede buscar peliculas por título y/o año.
 
 Para especificar el termino de búsqueda se deberán enviar como parámetros de query.
   - GET /movies?name=nombre
-  - GET /movies?year=año
-  - GET /movies?gender=genero
+  - GET /movies?year=año  
 
 Igualmente se puede unificar la búsqueda con todos los parametros
 - GET /movies?name=nombre&premiereDate=fecha&gender=genero
 
 Ejemplo de querys:
-  - GET /movies?name=avengers
-  - GET /movies?year=2021
-  - GET /movies?gender=ficcion
-  - GET /movies?name=avengers&year=fecha&gender=genero
+  - GET /movies?title=twilight
+  - GET /movies?year=2021  
+  - GET /movies?name=twilight&year=2013
   
-Creación, edición y eliminación de películas
+*Creación, edición y eliminación de películas*
 Para las siguientes solicitudes es necesario estar autenticado y enviar el token de acceso en el header de la solicitud.
 
 Debe enviarse con la key Authorization y la palabra "Bearer " + espacio, seguido del token de acceso, de la siguiente manera
@@ -77,19 +129,19 @@ Authorization: "Bearer token_access"
 Ejemplo:
 Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJicml0b21sdXpAZ21haWwuY29tIiwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NDUwNzUwMDR9.PGP9TyyKGAuP0bRQrYJLEoxx_HS_VyGxuiAp0_OD2WI"
 
-Creación de película
+*Creación de película*
 Para crear una película es necesario enviar un objeto JSON con los atributos de la película
 
 El endpoint es:
   - POST /movies
   {                          
-      "image": "string",
+      "image": "string(url)",
       "title": "string",
       "duration": "string",
       "gender": "string",
       "director": "string"                                
-      "year": "string"    
-      "rating": "string"    
+      "year": "string(yyyy-mm-dd)"    
+      "rating": "string(del 1 al 5)"    
       "overview": "string"    
       }
                     
@@ -97,17 +149,17 @@ Ejemplo de solicitud:
   - POST /movies
 Ejemplo de JSON a enviar:
   {
-      "image": "string",
-      "title": "string",
-      "duration": "string",
-      "gender": "string",
-      "director": "string"                                
-      "year": "string"    
-      "rating": "string"    
-      "overview": "string"    
+      "image": "https://www.themoviedb.org/movie/13995-captain-america#",
+      "title": "CAPTAIN AMERICA",
+      "duration": "1h 58m",
+      "gender": "FICCION",
+      "director": "STEPHEN TOLKIN"                                
+      "year": "1990-12-14"    
+      "rating": "3.8"    
+      "overview": "During World War II, a brave, patriotic American Soldier undergoes experiments to become a new supersoldier, "Captain America". Racing to Germany to sabotage the rockets of Nazi baddie "Red Skull"."    
       }
       
-Edición de película
+*Edición de película:*
 Para editar una película es necesario especificar el ID de la película en el path y se debe enviar un objeto JSON con los atributos de la película
 
 El endpoint es:
@@ -127,18 +179,18 @@ Ejemplo de solicitud:
   - PUT /movies/8
   
 Ejemplo de JSON a enviar:
-    {                        
-        "image": "string",
-        "title": "string",
-        "duration": "string",
-        "gender": "string",
-        "director": "string"                                
-        "year": "string"    
-        "rating": "string"    
-        "overview": "string"    
-        }
+   {                        
+      "image": "https://www.themoviedb.org/movie/49018-insidious#",
+      "title": "INSIDIOUS",
+      "duration": "1h 30m",
+      "gender": "TERROR",
+      "director": "JAMES WAN"                                
+      "year": "2018-01-25"    
+      "rating": "4.5"    
+      "overview": "A family discovers that dark spirits have invaded their home."    
+      }
                     
-Eliminación de película
+*Eliminación de película:*
 Para especificar la película que será eliminada es necesario enviar el ID de la película en el path
 
 El endpoint es:
@@ -150,8 +202,7 @@ Ejemplo de solicitud:
 
 **** ACTORES *****
 
-Listado de actores
-
+*Listado de actores*
 El listado muestra:
   - ID
   - Image
@@ -160,7 +211,16 @@ El listado muestra:
 El endpoint es:
   - GET /actors
 
-Detalles de actor
+El número de página debe especificarse por parámetro:
+  - GET /actors?page=numPage
+  
+El orden debe especificarse por parámetro:
+  - GET /actors?sort=atributo,asc|desc
+  - 
+Ejemplo de solicitud:
+  - GET /actors?page=0&sort=edad,desc
+
+*Detalles de actor*
 En el detalle se muestran todos los atributos de los actores como asi tambien sus películas relacionados.
   - ID
   - Image
@@ -172,23 +232,18 @@ En el detalle se muestran todos los atributos de los actores como asi tambien su
 Para especificar el actor que se desea obtener se debe pasar el id como parametro:
   - GET /actors/{id}
   
-Búsqueda de actores
-Se puede actores por nombre, edad y género.
+*Búsqueda de actores*
+Se puede actores por nombre y/o género. Genero debera ser female = 0 o male = 1
 Para especificar el termino de búsqueda se deberán enviar como parámetros de query.
-  - GET /actors?name=nombre
-  - GET /actors?age=edad
-  - GET /actors?gender=genero
-
-Igualmente se puede unificar la búsqueda con todos los parametros
-  - GET /actors?name=nombre&premiereDate=fecha&gender=genero
+  - GET /actors?name=nombre  
+  - GET /actors?gender=0|1
 
 Ejemplo de querys:
   - GET /actors?name=avengers
   - GET /actors?age=40
-  - GET /actors?gender=female/male
-  - GET /actors?name=scarlett&age=&gender=
+  - GET /actors?gender=0  
   
-Creación de actores
+*Creación de actores:*
 Para esta solicitud es necesario estar autenticado y enviar el token de acceso en el header de la solicitud.
 Debe enviarse con la key Authorization y la palabra "Bearer " + espacio, seguido del token de acceso, de la siguiente manera
 
@@ -196,7 +251,7 @@ Authorization: "Bearer token_access"
 Ejemplo:
 Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJicml0b21sdXpAZ21haWwuY29tIiwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NDUwNzUwMDR9.PGP9TyyKGAuP0bRQrYJLEoxx_HS_VyGxuiAp0_OD2WI"
 
-Creación de actor
+*Creación de actor:*
 Para crear un actor es necesario enviar un objeto JSON con los atributos del mismo
 
 El endpoint es:
@@ -205,8 +260,7 @@ El endpoint es:
         "image": "string",
         "name": "string",                            
         "gender": "string",
-        "age": "string",                            
-        "movies": "string"    
+        "age": "string"   
         }
                     
 Ejemplo de solicitud:
@@ -214,25 +268,22 @@ Ejemplo de solicitud:
   
 Ejemplo de JSON a enviar:
     {                          
-        "image": "string",
-        "name": "string",                            
-        "gender": "string",
-        "age": "string",                            
-        "movies": "string"    
+        "image": "https://www.themoviedb.org/person/90633-gal-gadot#",
+        "name": "Gal Gadot",                            
+        "gender": "FEMALE",
+        "age": "36"    
         }
         
 ***** DIRECTORES *****
 
-Listado de directores
+*Listado de directores*
 El listado muestra:
-
 ID
 Name
 El endpoint es
-
   - GET /directors
 
-Detalles de director
+*Detalles de director*
 En el detalle se muestran todos los atributos de los directores como asi tambien sus películas relacionados.
   - ID
   - Name
@@ -262,7 +313,7 @@ Ejemplo de solicitud:
   
 Ejemplo de JSON a enviar:
     {    
-        "name": "string"    
+        "name": "JAMES HUNT"    
         }
         
 ***** GENEROS *****
@@ -303,7 +354,6 @@ El endpoint es:
 Ejemplo de solicitud:
   - POST /genders
 Ejemplo de JSON a enviar:
-
     {    
-        "name": "string"    
+        "name": "JUVENIL"    
         }
